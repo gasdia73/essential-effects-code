@@ -8,5 +8,5 @@ object Never extends IOApp.Simple {
       .guarantee(IO.println("i guess never is now"))
 
   val never: IO[Nothing] =
-    IO.async_(???) // <1>
+    IO.async_(_ => ()) // <1>
 }

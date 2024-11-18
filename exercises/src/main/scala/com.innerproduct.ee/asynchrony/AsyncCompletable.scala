@@ -14,7 +14,11 @@ object AsyncCompletable extends IOApp.Simple {
   def fromCF[A](cfa: IO[CompletableFuture[A]]): IO[A] =
     cfa.flatMap { fa =>
       IO.async_ { cb =>
-        val handler: (A, Throwable) => Unit = ??? // <1>
+        val handler: (A, Throwable) => Unit = {
+          case (a, null) => cb(Right(a))
+          case (null, t) => cb(Left(t))
+          case (a, t) => sys.error(s"cippa $a $t")
+        }
 
         fa.handle(handler.asJavaBiFunction) // <2>
 
@@ -23,5 +27,5 @@ object AsyncCompletable extends IOApp.Simple {
     }
 
   def cf(): CompletableFuture[String] =
-    CompletableFuture.supplyAsync(() => "woo!") // <3>
+    CompletableFuture.supplyAsync(() => "dd") // <3>
 }
