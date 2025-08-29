@@ -16,11 +16,14 @@ object EarlyRelease extends IOApp.Simple {
       conn <- DbConnection.make(config.connectURL)
     } yield conn
 
-  lazy val configResource: Resource[IO, Config] = // <1>
-    for {
-      source <- sourceResource
-      config <- Resource.eval(Config.fromSource(source)) // <2>
-    } yield config
+  // lazy val configResource: Resource[IO, Config] = // <1>
+  //   for {
+  //     source <- sourceResource
+  //     config <- Resource.eval(Config.fromSource(source)) // <2>
+  //   } yield config
+
+  lazy val configResource: Resource[IO, Config] =
+    Resource.eval(sourceResource.use(Config.fromSource))
 
   lazy val sourceResource: Resource[IO, Source] =
     Resource.make(

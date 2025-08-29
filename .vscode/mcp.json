@@ -1,0 +1,8 @@
+{
+  "servers": {
+    "essential-effects-code-metals": {
+      "url": "http://localhost:38799/sse",
+      "type": "sse"
+    }
+  }
+}
