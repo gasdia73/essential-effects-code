@@ -1,0 +1,20 @@
+{
+  "name": "scala-cli",
+  "argv": [
+    "/nix/store/5ckbsdqy0q6ix1ckkdjf4awfd8qi0408-scala-cli-1.5.0/bin/scala-cli",
+    "bsp",
+    "--json-options",
+    "/home/gasdia73/Documents/Scala/essential-effects-code/examples/.scala-build/ide-options-v2.json",
+    "--json-launcher-options",
+    "/home/gasdia73/Documents/Scala/essential-effects-code/examples/.scala-build/ide-launcher-options.json",
+    "--envs-file",
+    "/home/gasdia73/Documents/Scala/essential-effects-code/examples/.scala-build/ide-envs.json",
+    "/home/gasdia73/Documents/Scala/essential-effects-code/examples"
+  ],
+  "version": "1.5.0",
+  "bspVersion": "2.1.1",
+  "languages": [
+    "scala",
+    "java"
+  ]
+}

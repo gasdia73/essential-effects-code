@@ -3,6 +3,7 @@ package com.innerproduct.ee.parallel
 import cats.effect._
 import cats.syntax.all._
 import com.innerproduct.ee.debug._
+import scala.concurrent.duration._
 
 object ParMapNErrors extends IOApp.Simple {
   def run: IO[Unit] =
@@ -14,10 +15,14 @@ object ParMapNErrors extends IOApp.Simple {
       IO.unit
 
   val ok = debugWithThread("hi")
-  val ko1 = IO.raiseError[String](new RuntimeException("oh!")).debug()
+  // val ko1 = IO.raiseError[String](new RuntimeException("oh!")).debug()
+  val ko1 = IO.sleep(1.second).as("ko1").debug() *>
+     IO.raiseError[String](new RuntimeException("oh!")).debug()
+
   val ko2 = IO.raiseError[String](new RuntimeException("noes!")).debug()
 
-  val e1 = (ok, ko1).parMapN((_, _) => ())
+  // val e1 = (ok, ko1).parMapN((_, _) => ())
+  val e1 = (ok, ko1).parTupled
   val e2 = (ko1, ok).parMapN((_, _) => ())
   val e3 = (ko1, ko2).parMapN((_, _) => ())
 }
